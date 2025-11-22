@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.example</groupId>
+	<artifactId>hello-world</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.0</version>
+		<relativePath/>
+	</parent>
+
+	<properties>
+		<hawtio.version>4.6.2</hawtio.version>
+		<logstash.version>9.0</logstash.version>
+		<lombok.version>1.18.42</lombok.version>
+		<swagger.version>3.0.0</swagger.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- <dependency>
+				<groupId>io.hawt</groupId>
+				<artifactId>hawtio-bom</artifactId>
+				<version>${hawtio.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency> -->
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>${logstash.version}</version>
+		</dependency>
+
+
+		<!-- Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+
+		<!-- Monitoring -->
+		<!-- <dependency>
+			<groupId>io.hawt</groupId>
+			<artifactId>hawtio-springboot</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.hawt</groupId>
+			<artifactId>hawtio-log</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.hawt</groupId>
+			<artifactId>hawtio-log-logback</artifactId>
+		</dependency> -->
+	</dependencies>
+
+	<build>
+		<finalName>app</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.github.git-commit-id</groupId>
+				<artifactId>git-commit-id-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<formats>
+						<format>
+							<includes>
+								<include>.gitattributes</include>
+								<include>.gitignore</include>
+								<include>pom.xml</include>
+							</includes>
+							<trimTrailingWhitespace />
+							<endWithNewline />
+							<indent>
+								<tabs>true</tabs>
+								<spacesPerTab>4</spacesPerTab>
+							</indent>
+						</format>
+					</formats>
+					<java>
+						<eclipse>
+							<sortMembersEnabled>true</sortMembersEnabled>
+							<sortMembersOrder>SF,SI,SM,F,I,C,M,T</sortMembersOrder>
+							<sortMembersDoNotSortFields>false</sortMembersDoNotSortFields>
+							<sortMembersVisibilityOrderEnabled>true</sortMembersVisibilityOrderEnabled>
+							<sortMembersVisibilityOrder>B,R,D,V</sortMembersVisibilityOrder>
+						</eclipse>
+						<indent>
+							<spaces>true</spaces>
+							<spacesPerTab>4</spacesPerTab>
+						</indent>
+						<importOrder />
+						<formatAnnotations />
+						<endWithNewline />
+						<removeUnusedImports />
+						<trimTrailingWhitespace />
+						<includes>
+							<include>**/*.java</include>
+						</includes>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<id>spotless-apply</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

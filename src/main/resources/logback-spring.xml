@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeContext>true</includeContext>
+            <includeMdc>true</includeMdc>
+            <includeTags>true</includeTags>
+            <includeCallerData>true</includeCallerData>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>10</maxDepthPerThrowable>
+                <rootCauseFirst>true</rootCauseFirst>
+            </throwableConverter>
+            <jsonGeneratorDecorator
+                class="net.logstash.logback.decorate.CompositeJsonGeneratorDecorator">
+                <decorator
+                    class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator" />
+                <decorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                    <defaultMask>******</defaultMask>
+                    <path>authorization</path>
+                    <path>x-api-key</path>
+                    <path>firstName</path>
+                    <path>lastName</path>
+                    <path>fullName</path>
+                    <path>email</path>
+                    <valueMask>
+                        <value>(?i)Bearer\s+([a-zA-Z0-9._\-]+)</value>
+                        <mask>Bearer ******</mask>
+                    </valueMask>
+                    <valueMask>
+                        <value>(?i)x-api-key=\[\w+\]</value>
+                        <mask>x-api-key=[******]</mask>
+                    </valueMask>
+                    <valueMask>
+                        <value>(?i)firstName=[\w\d '-]+</value>
+                        <mask>firstName=******</mask>
+                    </valueMask>
+                    <valueMask>
+                        <value>(?i)lastName=[\w\d '-]+</value>
+                        <mask>lastName=******</mask>
+                    </valueMask>
+                    <valueMask>
+                        <value>(?i)fullName=[\w\d '-]+</value>
+                        <mask>fullName=******</mask>
+                    </valueMask>
+                    <valueMask>
+                        <value>(?i)email=[\w\d'-]+@\w+\.\w+</value>
+                        <mask>email=******</mask>
+                    </valueMask>
+                </decorator>
+            </jsonGeneratorDecorator>
+        </encoder>
+    </appender>
+
+    <springProfile name="local">
+        <include resource="org/springframework/boot/logging/logback/base.xml" />
+        <root level="INFO">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+    <springProfile name="!local">
+        <root level="INFO">
+            <appender-ref ref="JSON" />
+        </root>
+    </springProfile>
+</configuration>
