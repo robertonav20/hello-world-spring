@@ -56,7 +56,7 @@ management:
         include: '*'
 
 hawtio:
-  enabled: false
+  enabled: true
   authenticationEnabled: false
 
 spring:
