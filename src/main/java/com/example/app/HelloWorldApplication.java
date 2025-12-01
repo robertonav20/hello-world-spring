@@ -1,9 +1,14 @@
 package com.example.app;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
+import lombok.extern.slf4j.Slf4j;
+import net.logstash.logback.argument.StructuredArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.web.exchanges.HttpExchangeRepository;
 import org.springframework.boot.actuate.web.exchanges.InMemoryHttpExchangeRepository;
@@ -13,14 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nullable;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
-import net.logstash.logback.argument.StructuredArguments;
 
 @Slf4j
 @RestController
